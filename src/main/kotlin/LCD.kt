@@ -85,7 +85,14 @@ object LCD {
     // Envia comando para posicionar cursor ('line ' : 0. . LINES -1 , 'column ' : 0. . COLS -1)
     fun cursor (line: Int, column: Int){
 
+        var lineValue = 0x0
+        var colValue = 0x4
+        if (line in 0..LINES -1 && column in 0..COLS -1){
+            if(line == 0) lineValue = 0x00 else lineValue = 0x40
+            colValue = lineValue + column
+        }
 
+        writeCMD(0x80 + colValue)
 
 
     }
