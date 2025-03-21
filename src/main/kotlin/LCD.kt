@@ -15,6 +15,7 @@ object LCD {
         HAL.clrBits(ALLMASK)
 
 
+
     }
 
     // Escreve um byte de comando/dados no LCD em serie
