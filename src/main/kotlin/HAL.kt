@@ -81,32 +81,6 @@ object HAL {
         }
     }
 }
-fun testHALFunctions() {
-    println("Testing HAL functions...")
-
-    // Test isBit function
-    val isBitResult = HAL.isBit(0x0F)
-    println("isBit(0x01): $isBitResult")
-
-    // Test readBits function
-    val readBitsResult = HAL.readBits(0xFF)
-    println("readBits(0xFF): $readBitsResult")
-
-    // Test writeBits function
-    HAL.writeBits(0xFF, 0xAA)
-    println("writeBits(0xFF, 0xAA) called")
-
-    // Test setBits function
-    HAL.setBits(0xFF)
-    println("setBits(0xFF) called")
-
-    // Test clrBits function
-    HAL.clrBits(0xF0)
-    println("clrBits(0xF0) called")
-
-    println("HAL functions tested.")
-}
-
 fun shiftLeft(value: Int, shift: Int): Int {
     return value shl shift
 }

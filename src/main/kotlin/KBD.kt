@@ -4,8 +4,6 @@ import isel.leic.utils.*
 // Ler teclas. Funcoes retornam ’0’..’9’, ’A’..’D’, ’#’, ’*’ ou NONE .
 object KBD {
 
-
-
     private val keys = arrayOf(
         '1', '2', '3', 'A',
         '4', '5', '6', 'B',
@@ -14,12 +12,11 @@ object KBD {
     )
 
 
-    const val NONE = 0 ;
+    const val NONE = 0
 
     // Inicia a classe
     fun init( ){
         UsbPort.write(NONE)
-
     }
 
     // Retorna de imediato a tecla premida ou NONE se nao ha tecla premida .
@@ -48,31 +45,4 @@ object KBD {
         }
         return NONE.toChar()
     }
-}
-fun main(args: Array<String>) {
-    KBD.init()
-    testKBDFunctions()
-    while (true) {
-        val portValue = UsbPort.read()  // read a byte from the USB port
-        // Exemplo de uso do HAL
-
-        HAL.writeBits(0xFF, portValue) // write the value to the USB port
-        println("Bits 0x01 esta ativo: ${HAL.isBit(0x01)}")
-
-        Time.sleep(500) // Pequena pausa para não sobrecarregar o loop
-    }
-}
-
-fun testKBDFunctions() {
-    println("Testing KBD functions...")
-
-    // Test getKey function
-    val getKeyResult = KBD.getKey()
-    println("getKey(): $getKeyResult")
-
-    // Test waitKey function with a timeout of 1000 milliseconds
-    val waitKeyResult = KBD.waitKey(1000)
-    println("waitKey(1000): $waitKeyResult")
-
-    println("KBD functions tested.")
 }
