@@ -9,12 +9,16 @@ object LCD {
 
     // Define se a interface e Serie ou Paralela
     private const val SERIAL_INTERFACE = false
-    private const val LOWMASK = 0x0F
-    private const val HIGHMASK = 0xF0
+    private const val LOW_MASK = 0x0F
+    private const val HIGH_MASK = 0xF0
+
+    private const val FUNCTION_SET = 0b0000110000
+    private const val DISPLAY_OFF = 0b0000111000
+    private const val DISPLAY_CLEAR = 0b0000000001
 
     // Escreve um byte de comando/dados no LCD em paralelo
     private fun writeNibbleParallel(rs: Boolean, data: Int){
-        HAL.clrBits(ALLMASK)
+        HAL.init()
 
 
     }
@@ -32,8 +36,8 @@ object LCD {
 
     // Escreve um byte de comando/dados no LCD
     private fun writeByte(rs: Boolean, data: Int){
-        writeNibble(rs, (data and HIGHMASK) shr 4)
-        writeNibble(rs,data and LOWMASK)
+        writeNibble(rs, (data and HIGH_MASK) shr 4)
+        writeNibble(rs,data and LOW_MASK)
 
     }
 
@@ -51,30 +55,30 @@ object LCD {
     fun init (){
         Time.sleep(15)
 
-        writeCMD(0b0000110000)
+        writeCMD(FUNCTION_SET)
 
         Time.sleep(5)
 
-        writeCMD(0b0000110000)
+        writeCMD(FUNCTION_SET)
 
         Time.sleep(1)
 
-        writeCMD(0b0000110000)
+        writeCMD(FUNCTION_SET)
 
-        writeCMD(0b0000111000)
+        writeCMD(DISPLAY_OFF)
 
-        writeCMD(0b0000000001)
+        writeCMD(DISPLAY_CLEAR)
 
     }
 
     // Escreve um carater na posicao corrente.
     fun write (c: Char){
-
+        writeDATA(c.code)
     }
 
     // Escreve uma string na posicao corrente.
     fun write(text: String){
-
+        text.forEach {write(it)}
     }
 
     // Envia comando para posicionar cursor ('line ' : 0. . LINES -1 , 'column ' : 0. . COLS -1)
@@ -84,7 +88,7 @@ object LCD {
 
     // Envia comando para limpar o ecra e posicionar o cursor em (0,0)
     fun clear (){
-
+        writeCMD(DISPLAY_CLEAR)
     }
 }
 

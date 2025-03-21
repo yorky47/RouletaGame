@@ -13,7 +13,6 @@ object HAL {
      * Inicializa o HAL e limpa todos os bits
      */
     fun init() {
-        clrBits(ALLMASK)
         lastValue = 0x00
         UsbPort.write(lastValue)
     }
