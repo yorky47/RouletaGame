@@ -1,6 +1,6 @@
 import isel.leic.UsbPort
 
-const val ALLMASK = 0xFF
+const val ALL_MASK = 0xFF
 /**
  * HAL - Hardware Abstraction Layer 5
  * Camada de abstração para acesso ao hardware através da porta USB

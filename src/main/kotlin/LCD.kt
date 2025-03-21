@@ -18,7 +18,9 @@ object LCD {
 
     // Escreve um byte de comando/dados no LCD em paralelo
     private fun writeNibbleParallel(rs: Boolean, data: Int){
-        HAL.init()
+
+
+
 
 
     }
@@ -38,7 +40,6 @@ object LCD {
     private fun writeByte(rs: Boolean, data: Int){
         writeNibble(rs, (data and HIGH_MASK) shr 4)
         writeNibble(rs,data and LOW_MASK)
-
     }
 
     // Escreve um comando no LCD
@@ -84,6 +85,9 @@ object LCD {
     // Envia comando para posicionar cursor ('line ' : 0. . LINES -1 , 'column ' : 0. . COLS -1)
     fun cursor (line: Int, column: Int){
 
+
+
+
     }
 
     // Envia comando para limpar o ecra e posicionar o cursor em (0,0)
@@ -91,11 +95,3 @@ object LCD {
         writeCMD(DISPLAY_CLEAR)
     }
 }
-
-
-
-
-
-
-
-
