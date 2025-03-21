@@ -9,11 +9,12 @@ object LCD {
 
     // Define se a interface e Serie ou Paralela
     private const val SERIAL_INTERFACE = false
+    private const val LOWMASK = 0x0F
+    private const val HIGHMASK = 0xF0
 
     // Escreve um byte de comando/dados no LCD em paralelo
     private fun writeNibbleParallel(rs: Boolean, data: Int){
         HAL.clrBits(ALLMASK)
-
 
 
     }
@@ -31,17 +32,19 @@ object LCD {
 
     // Escreve um byte de comando/dados no LCD
     private fun writeByte(rs: Boolean, data: Int){
+        writeNibble(rs, (data and HIGHMASK) shr 4)
+        writeNibble(rs,data and LOWMASK)
 
     }
 
     // Escreve um comando no LCD
     private fun writeCMD(data: Int){
-        writeByte(SERIAL_INTERFACE, data)
+        writeByte(false, data)
     }
 
     // Escreve um dado no LCD
     private fun writeDATA(data: Int){
-
+        writeByte(true, data)
     }
 
     // Envia a sequencia de iniciacao para comunicacao a 4 bits.
