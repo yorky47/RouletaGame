@@ -1,3 +1,5 @@
+import isel.leic.utils.Time
+
 // Escreve no LCD usando a interface a 4 bits.
 object LCD {
 
@@ -10,6 +12,8 @@ object LCD {
 
     // Escreve um byte de comando/dados no LCD em paralelo
     private fun writeNibbleParallel(rs: Boolean, data: Int){
+        HAL.clrBits(ALLMASK)
+
 
     }
 
@@ -31,7 +35,7 @@ object LCD {
 
     // Escreve um comando no LCD
     private fun writeCMD(data: Int){
-
+        writeByte(SERIAL_INTERFACE, data)
     }
 
     // Escreve um dado no LCD
@@ -41,6 +45,21 @@ object LCD {
 
     // Envia a sequencia de iniciacao para comunicacao a 4 bits.
     fun init (){
+        Time.sleep(15)
+
+        writeCMD(0b0000110000)
+
+        Time.sleep(5)
+
+        writeCMD(0b0000110000)
+
+        Time.sleep(1)
+
+        writeCMD(0b0000110000)
+
+        writeCMD(0b0000111000)
+
+        writeCMD(0b0000000001)
 
     }
 

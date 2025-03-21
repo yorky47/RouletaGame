@@ -1,5 +1,6 @@
 import isel.leic.UsbPort
 
+const val ALLMASK = 0xFF
 /**
  * HAL - Hardware Abstraction Layer 5
  * Camada de abstração para acesso ao hardware através da porta USB
@@ -12,6 +13,7 @@ object HAL {
      * Inicializa o HAL e limpa todos os bits
      */
     fun init() {
+        clrBits(ALLMASK)
         lastValue = 0x00
         UsbPort.write(lastValue)
     }
