@@ -16,13 +16,29 @@ object LCD {
     private const val DISPLAY_OFF = 0b0000111000
     private const val DISPLAY_CLEAR = 0b0000000001
 
+    private const val E_MASK = 0x20
+    private const val RS_MASK = 0x40
+
     // Escreve um byte de comando/dados no LCD em paralelo
-    private fun writeNibbleParallel(rs: Boolean, data: Int){
+    private fun writeNibbleParallel(rs: Boolean, data: Int) {
+        // Limpa os bits de dados
+        HAL.clrBits(LOW_MASK or HIGH_MASK)
 
+        // Escreve os bits de dados
+        HAL.writeBits(LOW_MASK, data)
 
+        // limpa ou ativa o bit RS
+        if (rs) {
+            HAL.setBits(RS_MASK)
+        } else {
+            HAL.clrBits(RS_MASK)
+        }
 
+        // Ativa o bit E para ler os dados
 
-
+        HAL.setBits(E_MASK)
+        Time.sleep(1) // Small delay to ensure the data is latched
+        HAL.clrBits(E_MASK)
     }
 
     // Escreve um byte de comando/dados no LCD em serie
